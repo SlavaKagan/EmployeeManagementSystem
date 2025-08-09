@@ -20,7 +20,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate(); // creates DB / applies migrations automatically
+    db.Database.Migrate();
 }
 Directory.CreateDirectory(Path.Combine(app.Environment.ContentRootPath, "Logs"));
 
