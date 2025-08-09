@@ -22,8 +22,8 @@ Logs/
 *.DS_Store
 Thumbs.db
 
-wwwroot/dist/
-wwwroot/lib/
+*/wwwroot/dist/
+*/wwwroot/lib/
 
 *.env
 appsettings.Development.json

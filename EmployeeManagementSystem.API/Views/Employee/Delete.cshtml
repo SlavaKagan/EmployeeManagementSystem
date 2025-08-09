@@ -1,0 +1,19 @@
+﻿@model EmployeeManagementSystem.Application.DTOs.EmployeeDTO
+@{
+    ViewData["Title"] = "Delete Employee";
+}
+
+<h3>Are you sure you want to delete @Model.FirstName @Model.LastName?</h3>
+
+<dl class="row">
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+    <dt class="col-sm-3">Department</dt>
+    <dd class="col-sm-9">@Model.DepartmentName</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

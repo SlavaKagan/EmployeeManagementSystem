@@ -1,0 +1,129 @@
+﻿@model EmployeeManagementSystem.Application.Common.PagedResult<EmployeeManagementSystem.Application.DTOs.EmployeeDTO>
+@using Microsoft.AspNetCore.Routing
+
+@{
+    string sortBy = (string?)ViewBag.SortBy ?? "";
+    bool desc = (bool)(ViewBag.Desc ?? false);
+    string? search = (string?)ViewBag.Search;
+    int pageSize = (int)(ViewBag.PageSize ?? 10);
+    int[] pageSizeOptions = (int[])ViewBag.PageSizeOptions;
+
+    string qs(object pageVal, string? sort = null, bool? d = null, string? s = null, int? ps = null)
+    {
+        var route = new RouteValueDictionary
+        {
+            ["page"] = pageVal,
+            ["pageSize"] = ps ?? pageSize,
+            ["sortBy"] = sort ?? sortBy,
+            ["desc"] = d ?? desc,
+            ["search"] = s ?? search
+        };
+        var q = string.Join("&", route.Where(kv => kv.Value != null).Select(kv => $"{kv.Key}={kv.Value}"));
+        return "?" + q;
+    }
+}
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-6">
+        <input name="search" value="@search" class="form-control" placeholder="Search name, email, department" />
+    </div>
+    <div class="col-md-3">
+        <select name="pageSize" class="form-select" onchange="this.form.submit()">
+            @foreach (var opt in pageSizeOptions)
+            {
+                if (opt == pageSize)
+                {
+                    <option value="@opt" selected>@opt per page</option>
+                }
+                else
+                {
+                    <option value="@opt">@opt per page</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">Apply</button>
+    </div>
+
+    <input type="hidden" name="sortBy" value="@sortBy" />
+    <input type="hidden" name="desc" value="@(desc ? "true" : "false")" />
+</form>
+
+@{
+    Func<string, string> sortLink = col => qs(1,
+        sort: col,
+        d: (sortBy == col && !desc) ? true : false);
+}
+
+<p class="mb-3 d-flex gap-2">
+    <a asp-action="Create" class="btn btn-primary">Add Employee</a>
+    <a asp-controller="Department" asp-action="Create" class="btn btn-outline-secondary">Add Department</a>
+</p>
+
+@if (TempData["Success"] is string ok && !string.IsNullOrWhiteSpace(ok))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ok
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (Model.TotalItems == 0)
+{
+    <div class="alert alert-info">
+        No employees found. <a asp-action="Create" class="alert-link">Add your first employee</a>.
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><a href="@sortLink("firstname")">First Name @(sortBy == "firstname" ? (desc ? "▼" : "▲") : "")</a></th>
+                <th><a href="@sortLink("lastname")">Last Name @(sortBy == "lastname" ? (desc ? "▼" : "▲") : "")</a></th>
+                <th><a href="@sortLink("email")">Email @(sortBy == "email" ? (desc ? "▼" : "▲") : "")</a></th>
+                <th><a href="@sortLink("hiredate")">Hire Date @(sortBy == "hiredate" ? (desc ? "▼" : "▲") : "")</a></th>
+                <th><a href="@sortLink("salary")">Salary @(sortBy == "salary" ? (desc ? "▼" : "▲") : "")</a></th>
+                <th><a href="@sortLink("department")">Department @(sortBy == "department" ? (desc ? "▼" : "▲") : "")</a></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in Model.Items)
+            {
+                <tr>
+                    <td>@e.FirstName</td>
+                    <td>@e.LastName</td>
+                    <td>@e.Email</td>
+                    <td>@e.HireDate.ToShortDateString()</td>
+                    <td><span aria-label="shekel">₪</span>@e.Salary.ToString("N2")</td>
+                    <td>@e.DepartmentName</td>
+                    <td class="text-nowrap">
+                        <a asp-action="Edit" asp-route-id="@e.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@e.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav>
+        <ul class="pagination">
+            <li class="page-item @(Model.Page == 1 ? "disabled" : "")">
+                <a class="page-link" href="@qs(Model.Page - 1)">Prev</a>
+            </li>
+
+            @for (int p = 1; p <= Model.TotalPages; p++)
+            {
+                <li class="page-item @(p == Model.Page ? "active" : "")">
+                    <a class="page-link" href="@qs(p)">@p</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.Page == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="@qs(Model.Page + 1)">Next</a>
+            </li>
+        </ul>
+    </nav>
+}
