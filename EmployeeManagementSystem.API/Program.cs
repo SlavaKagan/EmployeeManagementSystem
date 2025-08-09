@@ -3,6 +3,8 @@ using EmployeeManagementSystem.API.Logging;
 using EmployeeManagementSystem.API.Middleware;
 using EmployeeManagementSystem.Application;
 using EmployeeManagementSystem.Infrastructure;
+using EmployeeManagementSystem.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 SerilogConfiguration.ConfigureLogging();
@@ -15,6 +17,11 @@ builder.Services
     .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); // creates DB / applies migrations automatically
+}
 Directory.CreateDirectory(Path.Combine(app.Environment.ContentRootPath, "Logs"));
 
 if (!app.Environment.IsDevelopment())
