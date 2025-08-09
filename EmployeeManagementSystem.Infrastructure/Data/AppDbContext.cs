@@ -41,6 +41,12 @@ namespace EmployeeManagementSystem.Infrastructure.Data
             modelBuilder.Entity<Department>()
                 .Property(d => d.Name)
                 .IsRequired();
+
+            modelBuilder.Entity<Department>().HasData(
+                new Department { Id = 1, Name = "Dep1" },
+                new Department { Id = 2, Name = "Dep2" },
+                new Department { Id = 3, Name = "Dep3" }
+    );
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

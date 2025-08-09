@@ -18,7 +18,16 @@
 
 ** ![CI](https://github.com/<your-username>/<repo-name>/actions/workflows/ci.yml/badge.svg)
 
-## How to use this service
+## How to use this service || Prerequisites
+
+1. Docker Desktop (Windows, Mac, or Linux)-- https://www.docker.com/products/docker-desktop/
+2. GIT -- https://git-scm.com/
+3. From the project root (where docker-compose.yml is located), run:
+docker-compose up --build
+4. Access the Site
+Open a browser and go to: http://localhost:8081
+The API should be running and connected to the SQL Server container.
+5. Stop the Site -- docker-compose down
 
 ## Architecture rationale
 
