@@ -27,6 +27,7 @@ Directory.CreateDirectory(Path.Combine(app.Environment.ContentRootPath, "Logs"))
 if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSerilogRequestLogging();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
