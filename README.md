@@ -4,6 +4,21 @@
 
 ** A full-stack **ASP.NET Core MVC** Employee Management System with employee and department CRUD and basic Dashboard that showcases clean architecture layered design basic validation, pagination, structured logging and ships as a Docker container.
 
+## DEMO--
+
+## Department
+
+![alt text](ScreenShots\image.png)
+
+## Employee
+
+![alt text](ScreenShots\image-1.png)
+![alt text](ScreenShots\image-2.png)
+
+## Dashboard
+
+![alt text](ScreenShots\image-3.png)
+
 ## Contact
 
 **Email:** <slava.kagan.ht@gmail.com>
@@ -56,6 +71,20 @@ EF Core AppDbContext and repositories (*Repository) behind interfaces.
 Soft delete (boolean field): IsDeleted column + query filters or explicit Where(e => !e.IsDeleted).
 Migrations, connection strings, and data access optimizations.
 Registered via DI; can be swapped without touching upper layers.
+
+## Optimize the system+Future tasks
+
+In order to make the system better and to improve it I thought on few things that I would done if i had more time to implement
+
+1. Test Reference and Automation
+   * Unit Test
+   * Integration Tests
+2. Add more important logs through the system+ Performance Monitoring
+3. Security- Authentication and Authorization
+4. API Versioning
+5. Better UI styling
+6. Caching
+7. Terraform to deploy to AWS
 
 ## License
 
