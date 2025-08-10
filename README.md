@@ -8,16 +8,16 @@
 
 ## Department
 
-![alt text](ScreenShots\Department.png)
+![Department](ScreenShots\Department.png)
 
 ## Employee
 
-![alt text](ScreenShots\CreateEmployee.png)
-![alt text](ScreenShots\EmployeeTable.png)
+![Employee](ScreenShots/CreateEmployee.png)
+![Employee](ScreenShots/EmployeeTable.png)
 
 ## Dashboard
 
-![alt text](ScreenShots\Dashboard.png)
+![Dashboard](ScreenShots/Dashboard.png)
 
 ## Contact
 
