@@ -20,14 +20,17 @@
 
 ## How to use this service || Prerequisites
 
-1. Docker Desktop (Windows, Mac, or Linux)-- https://www.docker.com/products/docker-desktop/
-2. GIT -- https://git-scm.com/
-3. From the project root (where docker-compose.yml is located), run:
+1. Docker Desktop, Install- https://www.docker.com/products/docker-desktop/
+2. GIT Install -https://git-scm.com/
+3. Open IDE- Visua Studio Code or Visual Studio
+4. git clone https://github.com/SlavaKagan/EmployeeManagementSystem.git
+   cd EmployeeManagementSystem
+5. From the project root (where docker-compose.yml is located), run:
 docker-compose up --build
-4. Access the Site
+6. Access the Site-
 Open a browser and go to: http://localhost:8081
 The API should be running and connected to the SQL Server container.
-5. Stop the Site -- docker-compose down
+7. At the end of use, stop the Site -- docker-compose down
 
 ## Architecture rationale
 
