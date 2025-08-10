@@ -13,7 +13,6 @@ namespace EmployeeManagementSystem.Infrastructure
             services.AddDbContext<AppDbContext>(opts =>
                 opts.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-            // Repositories: register all *Repository classes as their interfaces (Scoped)
             services.Scan(scan => scan
                 .FromAssembliesOf(typeof(InfrastructureAssemblyMarker))
                 .AddClasses(c => c.Where(t => t.Name.EndsWith("Repository")))
